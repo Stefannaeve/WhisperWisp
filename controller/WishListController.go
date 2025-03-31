@@ -16,7 +16,6 @@ func HandleWishList(response http.ResponseWriter, request *http.Request) {
 			log.Printf("Fuck: %s", errorMessage.Error())
 		} else {
 			log.Printf("Object: %s", object)
-			log.Printf("Object: %s", object)
 		}
 	}
 }
