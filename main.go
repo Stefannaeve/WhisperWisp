@@ -2,6 +2,7 @@ package main
 
 import (
 	"WhisperWisp/controller"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -11,11 +12,16 @@ import (
 // the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.</p>
 
 func main() {
+	log.Println("Application startin...")
 	var muxServer = http.NewServeMux()
 	muxServer.HandleFunc("/wishlist", controller.HandleWishList)
-	var listener, error = net.Listen("tcp", ":8080")
-	if error != nil {
+	var listener, errorMessage = net.Listen("tcp", ":8080")
+	if errorMessage != nil {
 		os.Exit(1)
 	}
-	http.Serve(listener, muxServer)
+	log.Println("Starting server...")
+	errorMessage = http.Serve(listener, muxServer)
+	if errorMessage != nil {
+		log.Println("ErrorMessage: ", errorMessage.Error())
+	}
 }

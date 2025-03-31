@@ -1,25 +1,26 @@
 package controller
 
 import (
+	"WhisperWisp/service"
 	"log"
 	"net/http"
 )
 
 func HandleWishList(response http.ResponseWriter, request *http.Request) {
-	var object = "{wish: big giant dick}"
+
 	if request.Method == http.MethodGet {
-		var numberOfBytes, errorMessage = response.Write([]byte(object))
-		if numberOfBytes <= 0 {
-			log.Printf("Wtf")
-		}
-		if errorMessage != nil {
-			log.Printf("Fuck: %s", errorMessage.Error())
-		} else {
-			log.Printf("Object: %s", object)
-		}
+		GetWishList(response)
+
 	}
 }
 
-//func GetWishList() {
-//
-//}
+func GetWishList(response http.ResponseWriter) {
+	var object = service.GetWishList()
+	var numberOfBytes, errorMessage = response.Write([]byte(object))
+	if numberOfBytes <= 0 {
+		log.Printf("Got no data from service")
+	}
+	if errorMessage != nil {
+		log.Printf("Error message: %s", errorMessage.Error())
+	}
+}
